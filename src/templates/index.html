@@ -1,44 +1,120 @@
-/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Results Processor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #00115f, #744ecd);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2em;
+            font-weight: 600;
+            text-align: center;
+        }
+
         form {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 20px;
         }
+
+        label {
+            color: white;
+            font-size: 0.9em;
+            margin-bottom: -15px;
+        }
+
         input {
-            padding: 8px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1em;
+            transition: all 0.3s ease;
         }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
         button {
-            padding: 10px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
             margin-top: 10px;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .message {
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Student Results Processor</h1>
+        <h1>Daffodil CSE61 CGPA Scrapper</h1>
         <form action="/" method="GET">
-            <label for="startStudentId">Start Student ID:</label>
+            <label for="startStudentId">Start Student ID</label>
             <input type="text" id="startStudentId" name="startStudentId" placeholder="e.g. 4919" required>
             
-            <label for="endStudentId">End Student ID:</label>
+            <label for="endStudentId">End Student ID</label>
             <input type="text" id="endStudentId" name="endStudentId" placeholder="e.g. 4925" required>
             
             <button type="submit">Generate Results</button>
         </form>
         {% if message %}
-        <p>{{ message }}</p>
+        <div class="message">{{ message }}</div>
         {% endif %}
     </div>
 </body>
