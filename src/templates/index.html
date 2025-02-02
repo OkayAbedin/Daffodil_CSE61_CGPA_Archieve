@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,6 +31,7 @@
             border: 1px solid rgba(255, 255, 255, 0.18);
             width: 90%;
             max-width: 500px;
+            position: relative;
         }
 
         h1 {
@@ -98,24 +100,121 @@
             padding: 10px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.1);
+
+        }
+
+        .loader {
+            display: none;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        .timer {
+            color: white;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Daffodil CSE61 CGPA Scrapper</h1>
         <form action="/" method="GET">
             <label for="startStudentId">Start Student ID</label>
             <input type="text" id="startStudentId" name="startStudentId" placeholder="e.g. 4919" required>
-            
+
             <label for="endStudentId">End Student ID</label>
             <input type="text" id="endStudentId" name="endStudentId" placeholder="e.g. 4925" required>
-            
+
             <button type="submit">Generate Results</button>
         </form>
+        <div class="loader">
+            <div class="loader-spinner"></div>
+            <div class="timer">Time elapsed: <span id="timer">0:00</span></div>
+        </div>
         {% if message %}
         <div class="message">{{ message }}</div>
         {% endif %}
     </div>
+    <script>
+        const form = document.querySelector('form');
+        const loader = document.querySelector('.loader');
+        const timerElement = document.getElementById('timer');
+        let startTime;
+        let timerInterval;
+        let downloadCheckInterval;
+
+        function updateTimer() {
+            const currentTime = new Date().getTime();
+            const elapsedTime = Math.floor((currentTime - startTime) / 1000);
+            const minutes = Math.floor(elapsedTime / 60);
+            const seconds = elapsedTime % 60;
+            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function stopLoaderAndTimer() {
+            clearInterval(timerInterval);
+            clearInterval(downloadCheckInterval);
+            loader.style.display = 'none';
+        }
+
+        function checkForDownload() {
+            // Check for success message
+            const messageElement = document.querySelector('.message');
+            if (messageElement) {
+                const messageText = messageElement.textContent.trim();
+                if (messageText.includes('Generated') || messageText.includes('downloaded')) {
+                    stopLoaderAndTimer();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        form.addEventListener('submit', function (e) {
+            // Reset and start loader
+            stopLoaderAndTimer();
+            loader.style.display = 'block';
+            startTime = new Date().getTime();
+
+            // Start timers
+            timerInterval = setInterval(updateTimer, 1000);
+            downloadCheckInterval = setInterval(() => {
+                if (checkForDownload()) {
+                    clearInterval(downloadCheckInterval);
+                }
+            }, 500);
+        });
+
+        // Check on page load
+        window.addEventListener('DOMContentLoaded', checkForDownload);
+
+        // Handle errors
+        window.onerror = function () {
+            stopLoaderAndTimer();
+        };
+    </script>
 </body>
+
 </html>
