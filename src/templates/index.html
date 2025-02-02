@@ -1,0 +1,45 @@
+/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Results Processor</title>
+    <style>
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input {
+            padding: 8px;
+        }
+        button {
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Results Processor</h1>
+        <form action="/" method="GET">
+            <label for="startStudentId">Start Student ID:</label>
+            <input type="text" id="startStudentId" name="startStudentId" placeholder="e.g. 4919" required>
+            
+            <label for="endStudentId">End Student ID:</label>
+            <input type="text" id="endStudentId" name="endStudentId" placeholder="e.g. 4925" required>
+            
+            <button type="submit">Generate Results</button>
+        </form>
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
