@@ -1,6 +1,4 @@
-# student-results-processor/student-results-processor/README.md
-
-# Student Results Processor
+# Daffodil CSE61 Student CGPA Scrapper
 
 This project is a web application designed to fetch student results from a specified API, calculate SGPA and CGPA for each student, and generate an Excel sheet containing the results.
 
