@@ -112,5 +112,6 @@ def ensure_output_dir():
     if not os.path.exists(OUTPUT_DIR):
         os.makedirs(OUTPUT_DIR)
 
+
 if __name__ == '__main__':
     app.run(debug=True)
