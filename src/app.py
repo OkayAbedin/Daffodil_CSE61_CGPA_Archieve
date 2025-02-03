@@ -113,5 +113,3 @@ def ensure_output_dir():
         os.makedirs(OUTPUT_DIR)
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
